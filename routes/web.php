@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,53 +34,5 @@ Route::get('/about', function () {
 
 
 
-Route::get('/blog', function () {
-    $blog_posts = [
-        [
-            "title" => "Igoy Disiniii",
-            "slug" => "Awas Igoy dimarii",
-            "author" => "igoy",
-            "body" => "Yah jadi begituu"
-        ],
-        [
-            "title" => "Igoy Disiniii",
-            "slug" => "Awas Igoy dimarii",
-            "author" => "igoy",
-            "body" => "Ada igoy jangan larii"
-        ]
-    ];
-    return view('posts', [
-        "title" => "Posts",
-        "posts" => $blog_posts
-    ]);
-});
-
-//halaman single post
-Route::get('posts/{slug}', function($slug) {
-    $blog_posts = [
-        [
-            "title" => "Igoy Disiniii",
-            "slug" => "Awas Igoy dimarii",
-            "author" => "igoy",
-            "body" => "Hanya Pria biasa yang akan menaklukan dunia"
-        ],
-        [
-            "title" => "Igoy Disiniii",
-            "slug" => "Awas Igoy dimarii",
-            "author" => "igoy",
-            "body" => "Ada igoy jangan larii"
-        ]
-    ];
-
-    $new_post = [];
-    foreach($blog_posts as $post) {
-        if($post["slug"] === $slug) {
-            $new_post = $post;
-        }
-    }
-    
-    return view('post', [
-        "title" => "Single Post",
-        "post" => $new_post
-    ]);
-});
+Route::get('/blog', [PostController::class, 'index']);
+Route::get('posts/{slug}', [PostController::class, 'show']);
